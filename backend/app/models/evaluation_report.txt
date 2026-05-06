@@ -1,0 +1,4 @@
+Best model: xgboost
+xgboost: acc=0.5947 prec=0.5947 rec=1.0000 f1=0.7458 auc=0.4630 cv_f1=0.7448±0.0035
+random_forest: acc=0.5947 prec=0.5947 rec=1.0000 f1=0.7458 auc=0.4611 cv_f1=0.7448±0.0035
+logistic_regression: acc=0.5947 prec=0.5947 rec=1.0000 f1=0.7458 auc=0.4459 cv_f1=0.7448±0.0035
