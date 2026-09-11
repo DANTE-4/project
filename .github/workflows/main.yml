@@ -23,6 +23,6 @@ jobs:
       - name: Run main.py
         env:
           PYTHONPATH: backend
-        run: |
-          export $(cat backend/.env.example | xargs)
-          python backend/app/main.py
+          SECRET_KEY: "dummy-secret-key-for-ci-testing"
+          POSTGRES_URL: "postgresql://postgres:postgres@localhost:5432/dbname"
+        run: python backend/app/main.py
