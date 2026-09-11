@@ -23,4 +23,6 @@ jobs:
       - name: Run main.py
         env:
           PYTHONPATH: backend
-        run: python backend/app/main.py
+        run: |
+          export $(cat backend/.env.example | xargs)
+          python backend/app/main.py
