@@ -1,11 +1,22 @@
-name: Run FastAPI Backend
-
-on:
-  workflow_dispatch:
-
 jobs:
   run-backend:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: dbname
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -23,6 +34,6 @@ jobs:
       - name: Run main.py
         env:
           PYTHONPATH: backend
-          SECRET_KEY: "dummy-secret-key-for-ci-testing"
-          POSTGRES_URL: "postgresql://postgres:postgres@localhost:5432/dbname"
+          SECRET_KEY: "dummy-secret-key-for-ci"
+          POSTGRES_URL: "postgresql+asyncpg://postgres:postgres@localhost:5432/dbname"
         run: python backend/app/main.py
