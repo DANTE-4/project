@@ -1,8 +1,19 @@
-- name: List files in repository
-        run: |
-          echo "=== Current Working Directory ==="
-          pwd
-          echo "=== Root Directory Contents ==="
-          ls -la
-          echo "=== Full Repository Tree ==="
-          find . -maxdepth 3 -not -path '*/.*'
+name: Run Code
+
+on:
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.10'
+
+      - name: Run script
+        run: python src/main.py
