@@ -1,5 +1,4 @@
-# Workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll to GitHub Pages
+name: Deploy React Frontend to GitHub Pages
 
 on:
   push:
@@ -19,31 +18,35 @@ env:
   ACTIONS_RUNNER_FORCE_ACTIONS_NODE24: "true"
 
 jobs:
-  # Build job
+  # Build job for React / Vite
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
         with:
-          ruby-version: '3.2'
-          bundler-cache: true
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package.json
+
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Build React frontend
+        working-directory: ./frontend
+        run: npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Build Jekyll site
-        run: bundle exec jekyll build
-        env:
-          JEKYLL_ENV: production
-
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./_site"
+          path: './frontend/dist'
 
   # Deployment job
   deploy:
