@@ -14,6 +14,10 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+# Suppress runner deprecation warnings for Node 20 -> Node 24 runtime transitions
+env:
+  ACTIONS_RUNNER_FORCE_ACTIONS_NODE24: "true"
+
 jobs:
   # Job 1: Test & Run FastAPI Backend with PostgreSQL
   run-backend:
@@ -77,10 +81,10 @@ jobs:
         run: npm run build
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5.0.0
+        uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3.0.1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: './frontend/dist'
 
@@ -94,4 +98,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4.0.5
+        uses: actions/deploy-pages@v4
