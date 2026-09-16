@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   // Needed for GitHub Pages production build
-  base: 'project', // Replace with your exact GitHub repository name
+  base: '/project/', // Replace with your exact GitHub repository name
   
   // Used only during local development (npm run dev)
   server: {
