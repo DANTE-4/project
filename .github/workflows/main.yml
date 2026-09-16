@@ -14,10 +14,6 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-# Suppress runner deprecation warnings for Node 20 -> Node 24 runtime transitions
-env:
-  ACTIONS_RUNNER_FORCE_ACTIONS_NODE24: "true"
-
 jobs:
   # Job 1: Test & Run FastAPI Backend with PostgreSQL
   run-backend:
@@ -94,7 +90,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build-frontend
+    needs: [run-backend, build-frontend]
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
